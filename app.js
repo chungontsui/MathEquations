@@ -26,15 +26,21 @@ function EquationFactory() {
 		});
 	}
 
-	function getSign() {
+	function getSign(opType) {
 		//getOption to mix plus and minus
 		//var sign = "";  
-		if (generateRandom(1, 9) % 2 == 0) {
-			return "+";
+		if (opType == "MIXED") {
+			if (generateRandom(1, 9) % 2 == 0) {
+				return "+";
+			}
+			else {
+				return "-";
+			}
 		}
 		else {
-			return "-";
+			return opType == "ADD" ? "+" : "-";
 		}
+
 	}
 
 
@@ -52,7 +58,7 @@ function EquationFactory() {
 
 
 
-	function outputEquation(maxOperationCount) {
+	function outputEquation(maxOperationCount, opType) {
 
 		var output = "";
 
@@ -64,7 +70,7 @@ function EquationFactory() {
 		//for 3 elements
 		for (var i = 0; i < generateRandom(1, maxOperationCount) ; i++) {
 			var newEle = new eleEquation();
-			newEle.sign = getSign();
+			newEle.sign = getSign(opType);
 
 			if (newEle.sign == "-") {
 				getTotal(Equation);
@@ -89,18 +95,17 @@ function EquationFactory() {
 	}
 
 	//alert(output + "=");
-	
+
 	//still getting negative numbers...
 
 	return {
-		returnEquations: function (maxOperationCount, questionCount) {
+		returnEquations: function (maxOperationCount, questionCount, opType) {
 			//maxOperationCount = maxOperationCount;
 
 			outputEquations = [];
 
-			for(var i = 0; i < questionCount; i++)
-			{
-				outputEquations.push(outputEquation(maxOperationCount) + "=");
+			for (var i = 0; i < questionCount; i++) {
+				outputEquations.push(outputEquation(maxOperationCount, opType) + "=");
 			}
 
 			return outputEquations;
@@ -115,17 +120,27 @@ MathApp.controller("MainCtrl", function ($scope, MathAppFactory, $window) {
 
 	$scope.questionCount = 20;
 	$scope.maxOperationCount = 3;
+	$scope.opType = "MIXED";
 
-	$scope.makeEquations = function ()
-	{
-		$scope.Questions = MathAppFactory.returnEquations($scope.maxOperationCount, $scope.questionCount);
+	$scope.makeEquations = function () {
+		$scope.Questions = MathAppFactory.returnEquations($scope.maxOperationCount, $scope.questionCount, $scope.opType);
 	}
 
 	$scope.makeEquations();
-	
-	$scope.print = function ()
-	{
+
+
+	$scope.setOperationType = function (opType) {
+		$scope.opType = opType;
+	}
+
+	$scope.print = function () {
 		$window.print();
 	}
 
+	$scope.content = "welcome.html";
+
+	$scope.updateContent = function (pageURL)
+	{
+		$scope.content = pageURL;
+	}
 });
