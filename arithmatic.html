@@ -5,11 +5,11 @@
 			<form class="form-horizontal hidden-print" style="margin-top:20px">
 				<div class="form-group">
 					<label for="title">Number of Questions</label>
-					<input type="text" id="questionCount" class="form-control" placeholder="20" ng-model="questionCount" required />
+					<input type="text" id="questionCount" class="form-control" placeholder="20" ng-model="$parent.questionCount" required />
 				</div>
 				<div class="form-group">
 					<label for="title">Number of operations in an equation</label>
-					<input type="text" id="maxOperationCount" class="form-control" placeholder="3" ng-model="maxOperationCount" required />
+					<input type="text" id="maxOperationCount" class="form-control" placeholder="3" ng-model="$parent.maxOperationCount" required />
 				</div>
 				<div class="form-group">
 					<div class="dropdown">
@@ -18,15 +18,15 @@
 							<span class="caret"></span>
 						</button>
 						<ul class="dropdown-menu">
-							<li><a href="" ng-click="setOperationType('ADD')">Addition Only</a></li>
-							<li><a href="" ng-click="setOperationType('SUBTRACT')">Subtraction Only</a></li>
-							<li><a href="" ng-click="setOperationType('MIXED')">Mixed</a></li>
+							<li><a href="" ng-click="$parent.setOperationType('ADD')">Addition Only</a></li>
+							<li><a href="" ng-click="$parent.setOperationType('SUBTRACT')">Subtraction Only</a></li>
+							<li><a href="" ng-click="$parent.setOperationType('MIXED')">Mixed</a></li>
 						</ul>
 					</div>
 				</div>
 				<div class="form-group">
-					<button type="button" class="btn btn-primary" ng-click="makeEquations()">Make Equations</button>
-					<button type="button" class="btn btn-success" ng-click="print()">Print Questions</button>
+					<button type="button" class="btn btn-primary" ng-click="$parent.makeEquations()">Make Equations</button>
+					<button type="button" class="btn btn-success" ng-click="$parent.print()">Print Questions</button>
 				</div>
 			</form>
 		</div>
