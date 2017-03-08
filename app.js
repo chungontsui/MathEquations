@@ -2,7 +2,7 @@ var MathApp = angular.module("Math", []);
 
 function EquationFactory() {
 
-	this.maxOperationCount;
+	var maxOperationCount;
 
 	function generateRandom(min, max) {
 		min = Math.ceil(min);
@@ -52,7 +52,7 @@ function EquationFactory() {
 
 
 
-	function outputEquation() {
+	function outputEquation(maxOperationCount) {
 
 		var output = "";
 
@@ -62,7 +62,7 @@ function EquationFactory() {
 		});
 
 		//for 3 elements
-		for (var i = 0; i < generateRandom(1, 3) ; i++) {
+		for (var i = 0; i < generateRandom(1, maxOperationCount) ; i++) {
 			var newEle = new eleEquation();
 			newEle.sign = getSign();
 
@@ -94,13 +94,13 @@ function EquationFactory() {
 
 	return {
 		returnEquations: function (maxOperationCount, questionCount) {
-			this.maxOperationCount = maxOperationCount;
+			//maxOperationCount = maxOperationCount;
 
 			outputEquations = [];
 
 			for(var i = 0; i < questionCount; i++)
 			{
-				outputEquations.push(outputEquation() + "=");
+				outputEquations.push(outputEquation(maxOperationCount) + "=");
 			}
 
 			return outputEquations;
@@ -111,10 +111,21 @@ function EquationFactory() {
 
 MathApp.factory("MathAppFactory", EquationFactory);
 
-MathApp.controller("MainCtrl", function ($scope, MathAppFactory) {
+MathApp.controller("MainCtrl", function ($scope, MathAppFactory, $window) {
 
 	$scope.questionCount = 20;
 	$scope.maxOperationCount = 3;
 
-	$scope.Questions = MathAppFactory.returnEquations($scope.maxOperationCount, $scope.questionCount);
+	$scope.makeEquations = function ()
+	{
+		$scope.Questions = MathAppFactory.returnEquations($scope.maxOperationCount, $scope.questionCount);
+	}
+
+	$scope.makeEquations();
+	
+	$scope.print = function ()
+	{
+		$window.print();
+	}
+
 });
