@@ -30,7 +30,7 @@
 					</div>
 				</form>
 				<table class="table">
-					<tr ng-repeat="question in Questions"><td>{{question}}</td></tr>
+					<tr ng-repeat="question in Questions track by $index"><td><h3>{{$index}}</h3></td><td><h3>{{question}}</h3></td></tr>
 				</table>
 			</div>
 			<div class="col-md-2"></div>
